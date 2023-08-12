@@ -38,30 +38,30 @@ class IncomeStatistics(private val sortedIncomes: List<WageIncome>) {
     }
 
     fun print(printer: Printer) {
-        val movingAvg = movingAvg(12)
+        val movingAnnualAvg = movingAvg(12)
+        val movingSemiAnnualAvg = movingAvg(6)
         val movingAvgAnnualIncrease = movingAvgAnnualIncrease()
-        val movingSum = movingSum(12)
+        val movingAnnualTotal = movingSum(12)
+        val movingSemiAnnualTotal = movingSum(6)
 
-        printer.println(" Month     Income       Moving             Moving             Moving")
-        printer.println("                      annual avg.      annual increase    annual total")
-        val dividingLine = "----------------------------------------------------------------------"
-        printer.println(dividingLine)
+        val header =
+            " Month    Income     Moving         Moving          Moving     Moving semi-      96x       96x semi- \n" +
+            "                   annual avg.  annual increase  annual total   annual avg.  annual avg.  annual avg."
+        val dividingLine = "-----------------------------------------------------------------------------------------------------"
+        printer.headerLines = "$header\n$dividingLine".split('\n')
 
         sortedIncomes
             .forEachIndexed { index, income ->
-                val movingAvg = movingAvg[index]
+                val movingAnnualAvg = movingAnnualAvg[index]
                 val movingAvgAnnualIncrease = movingAvgAnnualIncrease[index]
-                val movingSum = movingSum[index]
+                val movingAnnualTotal = movingAnnualTotal[index]
+                val movingSemiAnnualAvg = movingSemiAnnualAvg[index]
 
                 if (income.month == 1) {
                     printer.println(dividingLine)
                 }
                 printer.println(
-                    "${income.year}/${income.month.format(2)}" +
-                        "  ${income.income.formatIncome()}" +
-                        "    ${movingAvg.formatIncome()}" +
-                        "            ${movingAvgAnnualIncrease.formatIncrease()} %" +
-                        "          ${movingSum.formatIncome()}"
+                    "${income.year}/${income.month.format(2)}${income.income.formatIncome()} ${movingAnnualAvg.formatIncome()}       ${movingAvgAnnualIncrease.formatIncrease()} %       ${movingAnnualTotal.formatIncome()}    ${movingSemiAnnualAvg.formatIncome()}    ${(96 * movingAnnualAvg).formatIncome()}    ${(96 * movingSemiAnnualAvg).formatIncome()}"
                 )
             }
 
@@ -71,5 +71,5 @@ class IncomeStatistics(private val sortedIncomes: List<WageIncome>) {
     }
 }
 
-fun Double.formatIncome() = this.format(2).width(9).replace(",", " ")
+fun Double.formatIncome() = this.format(2).width(10).replace(",", " ")
 fun Double.formatIncrease() = this.format(2).width(5)
