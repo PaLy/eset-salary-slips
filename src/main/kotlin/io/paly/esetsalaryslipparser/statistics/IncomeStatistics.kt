@@ -45,8 +45,8 @@ class IncomeStatistics(private val sortedIncomes: List<WageIncome>) {
         val movingSemiAnnualTotal = movingSum(6)
 
         val header =
-            " Month    Income     Moving         Moving          Moving     Moving semi-      96x       96x semi- \n" +
-            "                   annual avg.  annual increase  annual total   annual avg.  annual avg.  annual avg."
+            "Month   Income       Moving          Moving        Moving     Moving semi-      96x       96x semi- \n" +
+            "                 annual increase  annual total   annual avg.   annual avg.  annual avg.  annual avg."
         val dividingLine = "-----------------------------------------------------------------------------------------------------"
         printer.headerLines = "$header\n$dividingLine".split('\n')
 
@@ -61,7 +61,7 @@ class IncomeStatistics(private val sortedIncomes: List<WageIncome>) {
                     printer.println(dividingLine)
                 }
                 printer.println(
-                    "${income.year}/${income.month.format(2)}${income.income.formatIncome()} ${movingAnnualAvg.formatIncome()}       ${movingAvgAnnualIncrease.formatIncrease()} %       ${movingAnnualTotal.formatIncome()}    ${movingSemiAnnualAvg.formatIncome()}    ${(96 * movingAnnualAvg).formatIncome()}    ${(96 * movingSemiAnnualAvg).formatIncome()}"
+                    "${income.year - 2000}/${income.month.format(2)}${income.income.formatIncome()}      ${movingAvgAnnualIncrease.formatIncrease()} %       ${movingAnnualTotal.formatIncome()}    ${movingAnnualAvg.formatIncome()}   ${movingSemiAnnualAvg.formatIncome()}    ${(96 * movingAnnualAvg).formatIncome()}    ${(96 * movingSemiAnnualAvg).formatIncome()}"
                 )
             }
 
