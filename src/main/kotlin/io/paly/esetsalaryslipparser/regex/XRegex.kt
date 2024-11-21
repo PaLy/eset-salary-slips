@@ -29,6 +29,9 @@ const val NAME = "[$ALPHABET,.]+[$ALPHABET,. ]*[$ALPHABET.]+"
 const val INT = "[0-9]+"
 
 @Language("RegExp")
+const val INT_WITH_SPACES = "[0-9]( [0-9])*"
+
+@Language("RegExp")
 const val DOUBLE = "$INT(?:(?:.|,)$INT)?"
 
 @Language("RegExp")
