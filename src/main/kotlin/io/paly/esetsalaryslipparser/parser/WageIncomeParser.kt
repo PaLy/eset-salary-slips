@@ -2,12 +2,9 @@ package io.paly.esetsalaryslipparser.parser
 
 import io.paly.esetsalaryslipparser.args.getPassword
 import io.paly.esetsalaryslipparser.args.getSlipsDirectory
-import io.paly.esetsalaryslipparser.format. skMonthToNumber
+import io.paly.esetsalaryslipparser.format.skMonthToNumber
 import io.paly.esetsalaryslipparser.format.toUSDouble
-import io.paly.esetsalaryslipparser.regex.DOUBLE
-import io.paly.esetsalaryslipparser.regex.INT
-import io.paly.esetsalaryslipparser.regex.NAME
-import io.paly.esetsalaryslipparser.regex.findRegex
+import io.paly.esetsalaryslipparser.regex.*
 import java.lang.RuntimeException
 
 class WageIncomeParser(private val directory: String, private val password: String) : Parser<Sequence<WageIncome>> {
@@ -26,27 +23,24 @@ class WageIncomeParser(private val directory: String, private val password: Stri
 
     private fun parseWageIncome(text: String): WageIncome {
         val (oldYear, newYear) = text.findRegex(
-            "VYÚČTOVANIE MIEZD ZA MESIAC $INT/($INT)|($INT) Stredisko".toRegex()
+            "VYÚČTOVANIE MIEZD ZA MESIAC $INT/($INT)|($INT|$INT_WITH_SPACES) Stredisko".toRegex()
         )
-        val year = oldYear.ifEmpty { newYear }
+        val year = oldYear.ifEmpty { newYear.replace(" ","") }
 
         val (oldMonth, newMonth) = text.findRegex(
-            "VYÚČTOVANIE MIEZD ZA MESIAC ($INT)/|($NAME) *$INT Stredisko".toRegex()
+            "VYÚČTOVANIE MIEZD ZA MESIAC ($INT)/|($NAME) *($INT|$INT_WITH_SPACES) Stredisko".toRegex()
         )
         val month = oldMonth.ifEmpty {
             skMonthToNumber(newMonth).toString()
         }
 
         val (cistaMzda) = text.findRegex("(?:ČISTÁ MZDA|Čistá mzda) *($DOUBLE)".toRegex())
-        // TODO looks like old slips don't have 'cisty prijem'
-        val (cistyPrijem) = text.findRegex("(?:ČISTÝ PRÍJEM|Čiastka k výplate) *($DOUBLE)".toRegex())
-        val (vyplata) = text.findRegex("(?:DOPLATOK MZDY NA ÚČET:|Čiastka k výplate) *($DOUBLE)".toRegex())
+        val (vyplata) = text.findRegex("(?:DOPLATOK MZDY NA ÚČET:|DOPLATOK MZDY {2}NA ÚČET:|Čiastka k výplate) *($DOUBLE)".toRegex())
 
         return WageIncome(
             year.toInt(),
             month.toInt(),
             cistaMzda.toUSDouble(),
-            cistyPrijem.toUSDouble(),
             vyplata.toUSDouble()
         )
     }
@@ -63,7 +57,6 @@ data class WageIncome(
     val year: Int,
     val month: Int,
     val cistaMzda: Double,
-    val cistyPrijem: Double,
     val income: Double,
 )
 

@@ -4,6 +4,7 @@ import io.paly.esetsalaryslipparser.print.Printer
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.PDPage
 import org.apache.pdfbox.pdmodel.PDPageContentStream
+import org.apache.pdfbox.pdmodel.common.PDRectangle
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy
 import org.apache.pdfbox.pdmodel.font.PDType1Font
@@ -13,6 +14,7 @@ class PdfPrinter: Printer {
     private val doc = PDDocument()
     private var linesWritten = 0
     private var contentStream: PDPageContentStream? = null
+    override var headerLines = emptyList<String>()
 
     override fun println() {
         addNewPageIfNeeded()
@@ -26,7 +28,7 @@ class PdfPrinter: Printer {
             contentStream?.endText()
             contentStream?.close()
 
-            val page = PDPage()
+            val page = PDPage(PDRectangle(PDRectangle.A4.height, PDRectangle.A4.width))
             doc.addPage(page)
             contentStream =
                 PDPageContentStream(doc, page)
@@ -35,7 +37,18 @@ class PdfPrinter: Printer {
                         setLeading(16f)
                     }
             contentStream!!.beginText()
-            contentStream!!.newLineAtOffset(50f, 750f)
+            contentStream!!.newLineAtOffset(50f, 550f)
+            printHeader()
+        }
+    }
+
+    private fun printHeader() {
+        if (headerLines.isNotEmpty()) {
+            headerLines.forEach {
+                contentStream!!.showText(it)
+                contentStream!!.newLine()
+                linesWritten++
+            }
         }
     }
 
@@ -62,7 +75,7 @@ class PdfPrinter: Printer {
     }
 
     companion object {
-        private const val linesPerPage = 45
+        private const val linesPerPage = 33
     }
 }
 

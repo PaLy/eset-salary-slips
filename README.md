@@ -5,6 +5,12 @@
 ### How to get all salary slips from gmail:
 1. find all emails with slips by searching for string "PREHLÁSENIE O OCHRANE SÚKROMIA A DÔVERNOSTI"
 2. https://webapps.stackexchange.com/questions/102062/convenient-way-to-download-attachments-from-multiple-emails-in-gmail
+   Select all emails containing the attachments you wish to download.
+   Click the three dots at the top menu and go down to "Forward as attachment" then forward all emails to yourself.
+   You can then download all attachments from that one email to a folder on your hard drive. The attachments will be
+   interspersed with the email files, but you can quickly delete the email files by sorting by type of file, highlighting
+   and deleting. All attachments will be left in the folder, and you can combine them into a PDF file or easily print
+   them all using the program of your choosing.
 3. delete files which are not slips (you can do it later - app will output names of files which cannot be parsed)
 
 ### Usage
