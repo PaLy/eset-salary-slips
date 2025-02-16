@@ -57,7 +57,7 @@ class IncomeStatistics(private val sortedIncomes: List<WageIncome>) {
                 val movingAnnualTotal = movingAnnualTotal[index]
                 val movingSemiAnnualAvg = movingSemiAnnualAvg[index]
 
-                if (income.month == 1) {
+                if (income.month == 1 && !printer.isAtEndOfPage()) {
                     printer.println(dividingLine)
                 }
                 printer.println(

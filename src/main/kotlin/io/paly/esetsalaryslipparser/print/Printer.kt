@@ -4,4 +4,5 @@ interface Printer {
     var headerLines: List<String>
     fun println()
     fun println(line: String)
+    fun isAtEndOfPage(): Boolean
 }

@@ -16,11 +16,7 @@ class PdfPrinter: Printer {
     private var contentStream: PDPageContentStream? = null
     override var headerLines = emptyList<String>()
 
-    override fun println() {
-        addNewPageIfNeeded()
-        contentStream!!.newLine()
-        linesWritten++
-    }
+    override fun isAtEndOfPage() = linesWritten == linesPerPage
 
     private fun addNewPageIfNeeded() {
         if (linesWritten == 0 || linesWritten == linesPerPage) {
@@ -50,6 +46,12 @@ class PdfPrinter: Printer {
                 linesWritten++
             }
         }
+    }
+
+    override fun println() {
+        addNewPageIfNeeded()
+        contentStream!!.newLine()
+        linesWritten++
     }
 
     override fun println(line: String) {
