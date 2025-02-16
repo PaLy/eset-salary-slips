@@ -1,3 +1,5 @@
 .gradle
 inputSlips
 build
+.idea
+*.pdf
