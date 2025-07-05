@@ -8,6 +8,7 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy
 import org.apache.pdfbox.pdmodel.font.PDType1Font
+import org.apache.pdfbox.pdmodel.font.Standard14Fonts
 
 
 class PdfPrinter: Printer {
@@ -29,7 +30,7 @@ class PdfPrinter: Printer {
             contentStream =
                 PDPageContentStream(doc, page)
                     .apply {
-                        setFont(PDType1Font.COURIER, 12f)
+                        setFont(PDType1Font(Standard14Fonts.FontName.COURIER), 12f)
                         setLeading(16f)
                     }
             contentStream!!.beginText()

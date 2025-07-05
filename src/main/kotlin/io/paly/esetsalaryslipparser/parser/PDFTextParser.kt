@@ -1,6 +1,7 @@
 package io.paly.esetsalaryslipparser.parser
 
 import org.apache.pdfbox.Loader
+import org.apache.pdfbox.io.RandomAccessReadBuffer
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.text.PDFTextStripper
 import java.io.File
@@ -26,7 +27,7 @@ class PDFTextParser: Parser<String> {
         return if (password != null) {
             Loader.loadPDF(file, password)
         } else {
-            Loader.loadPDF(inputStream)
+            Loader.loadPDF(RandomAccessReadBuffer(inputStream))
         }
             .let(this::getText)
     }

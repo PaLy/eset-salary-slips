@@ -71,5 +71,5 @@ class IncomeStatistics(private val sortedIncomes: List<WageIncome>) {
     }
 }
 
-fun Double.formatIncome() = this.format(2).width(10).replace(",", " ")
+fun Double.formatIncome() = this.format(2).width(10)
 fun Double.formatIncrease() = this.format(2).width(5)

@@ -7,7 +7,7 @@ import java.util.*
 fun skMonthToNumber(month: String): Int {
     return DateTimeFormatter
         .ofPattern("LLLL")
-        .withLocale(Locale("sk"))
+        .withLocale(Locale.of("sk"))
         .parse(month)
         .get(ChronoField.MONTH_OF_YEAR)
 }
@@ -16,7 +16,7 @@ fun String.toUSDouble(): Double {
     return replace(',', '.').toDouble()
 }
 
-fun Double.format(decimalDigits: Int) = "%,.${decimalDigits}f".format(this)
+fun Double.format(decimalDigits: Int) = "%,.${decimalDigits}f".format(Locale.of("en"),this).replace(",", " ")
 
 fun Int.format(digits: Int) = "%0${digits}d".format(this)
 
