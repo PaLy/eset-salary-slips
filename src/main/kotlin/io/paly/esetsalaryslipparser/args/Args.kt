@@ -4,9 +4,8 @@ fun getPassword(args: Array<String>): String {
     return args.getOption("-p")
         .ifEmpty {
             print("Enter password: ")
-            val password = System.console()?.readPassword()?.joinToString("")
-                ?: readLine()
-            password!!
+            System.console()?.readPassword()?.joinToString("")
+                ?: readln()
         }
 }
 

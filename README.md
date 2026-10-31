@@ -22,7 +22,7 @@
 
 ### Usage
 - download bin/eset-salary-slips-1.1.jar
-- required Java >= 21
+- required Java >= 25
 - run: java -jar eset-salary-slips-1.1.jar --slips {slips}
   - {slips} is path to directory with all salary slips
   - it will ask you to enter password used to decrypt slips
