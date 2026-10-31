@@ -1,6 +1,13 @@
 ### What it does
 - outputs income statistics to a single encrypted PDF file
   - moving annual average, moving annual increase, moving annual total, total income
+  - yearly chart (values at the last month of each year): moving annual increase as bars; moving annual average,
+    moving annual average adjusted for inflation (in prices of the first year in the chart),
+    salary of a good / high performer (first year's average growing yearly by inflation + 3 % / + 5.5 %)
+    and Slovakia inflation (HICP, 12-month average rate of change) as lines
+    - inflation data is downloaded from [Eurostat](https://ec.europa.eu/eurostat/databrowser/view/prc_hicp_minr/default/table)
+      (no salary data is sent) and cached in ~/.eset-salary-slips/slovak-inflation.csv; when offline, the newer
+      of the cache and the bundled data (src/main/resources/slovak-inflation.csv) is used
 
 ### How to get all salary slips from gmail:
 1. find all emails with slips by searching for string "PREHLÁSENIE O OCHRANE SÚKROMIA A DÔVERNOSTI"

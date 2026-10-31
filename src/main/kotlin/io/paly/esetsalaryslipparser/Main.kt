@@ -3,6 +3,7 @@ package io.paly.esetsalaryslipparser
 import io.paly.esetsalaryslipparser.args.getDebug
 import io.paly.esetsalaryslipparser.args.getPassword
 import io.paly.esetsalaryslipparser.args.getSlipsDirectory
+import io.paly.esetsalaryslipparser.inflation.SlovakInflation
 import io.paly.esetsalaryslipparser.parser.WageIncomeParser
 import io.paly.esetsalaryslipparser.parser.compareByDateTo
 import io.paly.esetsalaryslipparser.print.pdf.PdfPrinter
@@ -24,7 +25,7 @@ class Main {
                     .toList()
                     .let { incomes ->
                         val pdfPrinter = PdfPrinter()
-                        IncomeStatistics(incomes).print(pdfPrinter)
+                        IncomeStatistics(incomes, SlovakInflation.load()).print(pdfPrinter)
                         val outputFileName = "income-statistics.pdf"
                         pdfPrinter.save(outputFileName, password)
                         println()
